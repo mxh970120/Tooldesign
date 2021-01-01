@@ -7,7 +7,7 @@ Date: 2020.12.31
 
 import sys
 from PyQt5.QtWidgets import QWidget, QCheckBox, QApplication, QGridLayout, QPushButton, QMessageBox
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QCoreApplication
 from PyQt5.QtGui import QIcon
 import numpy as np
 import openpyxl
@@ -104,6 +104,7 @@ class Example(QWidget):
 
         if reply == QMessageBox.Yes:
             self.speichern_table()
+            QCoreApplication.instance().quit()
 
     def speichern_table(self):
         now = datetime.datetime.now()
@@ -116,7 +117,7 @@ class Example(QWidget):
             self.sheet.delete_rows(row)
         self.sheet.append(daten)
         self.wb.save(filename="daten.xlsx")
-        print("gespeichert")
+        print("已保存")
 
 
 if __name__ == '__main__':
