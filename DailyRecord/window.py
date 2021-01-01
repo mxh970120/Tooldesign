@@ -19,6 +19,7 @@ class Example(QWidget):
     def __init__(self):
         super().__init__()
 
+        # 基本属性
         self.attributes = np.array([["学习", "没学习", "<1h", "1h~2h", ">2h"],
                               ["走路", "没走路", "<1万步", "1万步~10公里", ">10公里"],
                               ["编程", "没编程", "<1h", "1h~2h", ">2h"],
@@ -28,6 +29,7 @@ class Example(QWidget):
         self.all_button_checkbox = np.copy(self.attributes)
         self.table = [0]*len(self.attributes)
 
+        # Excel的属性
         self.wb = openpyxl.load_workbook('daten.xlsx')
         now = datetime.datetime.now()
         if str(now.month) not in self.wb.sheetnames:
@@ -54,7 +56,7 @@ class Example(QWidget):
                     self.all_button_checkbox[i][j] = button
                 else:
                     cb = QCheckBox(value, self)
-                    cb.stateChanged.connect(self.changeTitle)
+                    cb.stateChanged.connect(self.changeTable)
                     grid.addWidget(cb, i, j)
                     self.all_button_checkbox[i][j] = cb
 
@@ -72,7 +74,7 @@ class Example(QWidget):
         # 显示窗口
         self.show()
 
-    def changeTitle(self, state):
+    def changeTable(self, state):
         sender = self.sender()
         position = [0, 0]
         for i in range(len(self.all_button_checkbox)):
